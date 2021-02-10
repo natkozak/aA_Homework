@@ -1,8 +1,22 @@
+class CoffeeError < StandardError
+  def message 
+    "No give me coffee now"
+  end
+end
+
+class FruitError < StandardError
+
+  
+  def message 
+    "ZOMG NO!!! You needed to give me a fruit! But you gave me coffee so I'll give you one more try."
+  end
+end
+
 # PHASE 2
 def convert_to_int(str)
   Integer(str)
 
-rescue
+rescue ArgumentError
   puts "Please use numbers, not letters."
 end
 
@@ -12,18 +26,20 @@ FRUITS = ["apple", "banana", "orange"]
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
-  else 
-    raise StandardError 
+  elsif maybe_fruit == "coffee"
+    puts "HIHIHI YES Thanks for the coffee!!!!!!!!!!!!!"
+    raise FruitError
+  else
+    raise "You tried. You failed. No more friendship for you."
   end
-
   
 end
 
 def coffee_reaction(maybe_coffee)
   if "coffee" == maybe_coffee
-    puts "HIHIHI YES Thanks for the coffee!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    
   else
-    raise "You tried. You failed. No more friendship for you."
+    
   end
 end
 
@@ -34,14 +50,13 @@ def feed_me_a_fruit
 
   #exception attempt; not working
   begin
-  maybe_fruit = gets.chomp
+  maybe_fruit = gets.chomp #endless loop if this line is above "begin"
   return reaction(maybe_fruit)
-  unless hate.nil?
-    return coffee_reaction(maybe_fruit)
-  end
-  rescue StandardError => e
-    hate = true
-    puts "ZOMG NO!!! You needed to give me a fruit! I only want coffee now."
+  #return coffee_reaction(maybe_fruit)
+  rescue CoffeeError => e
+    puts e.message
+  rescue FruitError => e
+    puts e.message
     retry
   end
   
@@ -56,7 +71,7 @@ class BestFriend
     @fav_pastime = fav_pastime
     raise "Not enough time boyo" if @yrs_known < 5
     raise "name yourself" if @name == nil
-    raise "no, that's not a pasttime!!" if @fav_pasttime == nil
+    raise "no, that's not a pasttime!!" if @fav_pastime.nil?
   end
 
   def talk_about_friendship
