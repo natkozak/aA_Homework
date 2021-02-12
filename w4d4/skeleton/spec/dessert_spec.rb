@@ -1,5 +1,6 @@
 require 'rspec'
 require 'dessert'
+require 'chef'
 
 =begin
 Instructions: implement all of the pending specs (the `it` statements without blocks)! Be sure to look over the solutions when you're done.
@@ -61,7 +62,8 @@ describe Dessert do
 
   describe "#make_more" do
     it "calls bake on the dessert's chef with the dessert passed in" do
-      expect(cake.make_more).to call(chef.bake(cake))
+      allow(cake.make_more).to receive(chef.bake).with(cake)
+      cake.make_more
     end
   end
 end
