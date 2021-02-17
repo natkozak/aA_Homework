@@ -1,3 +1,32 @@
+  class DoubleLinkedList
+    attr_reader :prev, :next, :val
+
+    def initialize(val = nil)
+      @val = val
+      @prev = nil
+      @next = nil
+    end
+
+    def append(node)
+      node.prev.next = nil if node.prev
+      self.next.prev = nil if self.next
+
+      node.prev = self
+      self.next = node
+    end
+
+    def detach
+      self.prev.next = nil if self.prev
+      self.next.prev = nil if self.next
+    end
+
+    def inspect
+      
+    end
+
+
+  end
+  
   class LRUCache
     attr_accessor = :size
 
@@ -10,16 +39,16 @@
       @cache.count
     end
 
-    def add(el)
-      # @cache.delete(el) if @cache.include?(el)
+    def add(ele)
+      # @cache.delete(ele) if @cache.include?(ele)
       # @cache.delete_at(0) if self.count > @size
-      # @cache << el
-      if @cache.include?(el)
-        @cache.delete(el)
+      # @cache << ele
+      if @cache.include?(ele)
+        @cache.delete(ele)
       elsif count >= @size
         @cache.shift
       end
-      @cache << el
+      @cache << ele
     end
 
     def show
